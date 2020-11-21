@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./index.css";
-import * as serviceWorker from "./serviceWorker";
 import App from "./App";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
@@ -13,10 +13,10 @@ import {
   reduxFirestore,
 } from "redux-firestore";
 import { ReactReduxFirebaseProvider, getFirebase } from "react-redux-firebase";
-import db from "./config/fbconfig";
+import db from "./config/fbconfig.js";
 import firebase from "firebase/app";
 import "firebase/auth";
-import rrfConfig from "./config/rrfConfig";
+import rrfConfig from "./config/rrfconfig.js";
 
 if (!firebase.apps.length) {
   firebase.initializeApp(db);
@@ -47,4 +47,3 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-serviceWorker.unregister();

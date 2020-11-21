@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { connect } from "react-redux";
+import { Container } from "react-bootstrap";
+import Login from "./components/Login";
+import Landing from "./components/Landing";
+import Signup from "./components/Signup"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const routes = [
+  { path: "/", name: "Login", Component: Login },
+  { path: "/Main", name: "Landing", Component: Landing },
+  { path: "/Signup", name: "Signup", Component: Signup },
+];
+
+class App extends React.Component {
+  render() {
+    if (this.props.profile.isLoaded) {
+      return (
+        <BrowserRouter>
+          <Container className="app">
+            <Switch>
+              {routes.map(({ path, Component }) => (
+                <Route key={path} exact path={path} component={Component} />
+              ))}
+            </Switch>
+          </Container>
+        </BrowserRouter>
+      );
+    } else {
+      //TODO: INDSÆT LOADING SCREEN!
+      return <div></div>;
+    }
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    profile: state.firebase.profile,
+  };
+};
+
+export default connect(mapStateToProps)(App);
