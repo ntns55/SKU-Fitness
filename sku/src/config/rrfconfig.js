@@ -1,6 +1,6 @@
 const rrfConfig = {
     useFirestoreForProfile: true,
-    userProfile: "profil",
+    userProfile: "Profile",
     attachAuthIsReady: true,
   };
   

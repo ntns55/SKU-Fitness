@@ -6,7 +6,7 @@ class Overview extends React.Component {
         this.state = {  }
     }
     render() { 
-        return ( <div>
+        return ( <div className="rounded">
         <h1>Oversigt</h1>
         <p>This is the overview section</p>
         </div> );
