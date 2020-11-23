@@ -11,7 +11,6 @@ class Login extends react.Component {
         this.state = { username: "", password:"", selected:"first" }
     }
     render() { 
-        console.log(this.props,"Landing")
         return ( 
         <div className="vertical-center">
           <Tab.Container id="left-tabs-example" defaultActiveKey="first">
