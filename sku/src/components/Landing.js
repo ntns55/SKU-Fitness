@@ -4,13 +4,27 @@ import {Tab, Col, Nav, Row} from "react-bootstrap";
 import Overview from "./Overview"
 import NewSession from "./Nysession";
 import History from "./History";
+import {firestoreConnect} from "react-redux-firebase";
+import {compose} from "redux";
 
 class Login extends react.Component {
     constructor(props) {
         super(props);
         this.state = { username: "", password:"", selected:"first" }
     }
-    render() { 
+    render() {
+      let tempData = []
+      if(this.props.styrke !== undefined && this.props.kondition !== undefined && this.props.udholdenhed !== undefined){
+          const temp = {...this.props.styrke,...this.props.kondition,...this.props.udholdenhed}
+          const keys = Object.keys(temp);
+          keys.forEach(element => {
+              if(temp[element].owner === this.props.auth.uid){
+                  tempData.push({...temp[element],name:element})
+              }
+          });
+      }
+      tempData.sort((a,b)=>{return new Date(b.date) - new Date(a.date)})
+      const data = tempData 
         return ( 
         <div className="vertical-center">
           <Tab.Container id="left-tabs-example" defaultActiveKey="first">
@@ -55,7 +69,7 @@ class Login extends react.Component {
                     <NewSession />
                   </Tab.Pane>
                   <Tab.Pane eventKey="third">
-                    <History />
+                    <History data={data}/>
                   </Tab.Pane>
                 </Tab.Content>
               </Col>
@@ -69,7 +83,14 @@ const mapStateToProps = (state) => {
     return {
       profile: state.firebase.profile,
       auth: state.firebase.auth,
+      styrke: state.firestore.data.Styrke,
+      kondition: state.firestore.data.Kondition,
+      udholdenhed: state.firestore.data.Udholdenhed
     };
   };
   
-export default connect(mapStateToProps)(Login);
+export default compose(connect(mapStateToProps),firestoreConnect([
+  {collection:"Styrke"},
+  {collection:"Kondition"},
+  {collection:"Udholdenhed"}
+]))(Login);

@@ -6,9 +6,10 @@ export const register = (payload) => {
       .doc(payload.id+": "+firestore.Timestamp.now())
       .set({
         exercises:payload.ex,
-        Date: firestore.Timestamp.now(),
+        date: firestore.Timestamp.now(),
         reps:payload.reps,
         owner: payload.uid,
+        type: payload.type
       })
       .then((res) => {
         dispatch({
