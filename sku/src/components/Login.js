@@ -10,11 +10,11 @@ class Login extends react.Component {
     }
 
     loginhandler= (event) =>{
-      event.preventdefault();
+      event.preventDefault();
       if(this.state.username !== "" && this.state.password !== ""){
-
+        this.props.Login({...this.state, email:this.state.username})
       }else{
-
+        /*TODO: indsæt modal om fejl login her. */
       }
     }
 
