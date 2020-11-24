@@ -3,21 +3,21 @@ import {connect} from "react-redux";
 import { Button, Container, Modal } from "react-bootstrap";
 import ReactTable from 'react-table-v6'
 import 'react-table-v6/react-table.css'
+import {slet} from "./../Redux/actions/trainingactions"
 
 class History extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { show:false }
+        this.state = { show:false, target:"", type:""}
     }
 
     sletElement = (event, value) => {
         event.preventDefault();
-        this.setState({show:false})
+        this.props.Slet({target: this.state.target, type:this.state.type})
+        this.setState({show:false, target: "", type:""})
     }
 
     render() { 
-       
-
         const columns = [{
             defaultSort:true,
             Header: 'Dato',
@@ -50,9 +50,10 @@ class History extends React.Component {
         {Header: "Slet?",
         accessor:"name",
         Cell: props =>{
+            console.log(props)
             return <Button onClick={(event)=>{
                 event.preventDefault();
-                this.setState({show:true, target:props.value});
+                this.setState({show:true, target:props.value, type:props.row.type});
                 }}>Slet?</Button>
         }}]
         
@@ -63,13 +64,13 @@ class History extends React.Component {
                 columns={columns}
             />
             </Container>
-            <Modal show={this.state.show} onHide={()=>this.setState({show:false, target:""})}>
+            <Modal show={this.state.show} onHide={()=>this.setState({show:false, target:"", type:""})}>
                 <Modal.Header closeButton>
                 <Modal.Title>Du er ved at slette noget!</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Du er ved at slette en træningsgang. Er du sikker på du har valgt den rigtige?</Modal.Body>
                 <Modal.Footer>
-                <Button variant="secondary" onClick={()=>this.setState({show:false, target:""})}>
+                <Button variant="secondary" onClick={()=>this.setState({show:false, target:"", type:""})}>
                     Luk
                 </Button>
                 <Button variant="primary" onClick={(event)=>this.sletElement(event)}>
@@ -91,7 +92,7 @@ const mapStatetoProps = (state) =>{
 const mapDispatchToProps = (dispatch) => {
     return {
         Slet: (payload) => {
-            
+            dispatch(slet(payload))
         },
     };
 };

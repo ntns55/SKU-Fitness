@@ -1,3 +1,20 @@
+export const slet = (payload) =>{
+  return (dispatch, getState, {getFirebase, getFirestore}) =>{
+    const firestore = getFirestore();
+      firestore.collection(payload.type).doc(payload.target).delete().then(()=>{
+        dispatch({
+          type: "DELETE_TRAINNING_SUCCESS"
+        });
+    }).catch((error)=>{
+      dispatch({
+        type: "DELETE_TRAINNING_ERROR",
+        error: error,
+        msg: error.message,
+      });
+    })
+  }
+}
+
 export const register = (payload) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firestore = getFirestore();
