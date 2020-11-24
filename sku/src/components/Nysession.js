@@ -208,7 +208,7 @@ class NewSession extends React.Component {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button variant="primary" onClick={()=>{this.setState({show:false})}}>OK!</Button>
+                    <Button variant="primary" onClick={()=>{this.setState({show:false, type:"ingen", tableHeaders:{}, reps:5, øvelse:{}})}}>OK!</Button>
                 </Modal.Footer>
             </Modal>
         </div> );
