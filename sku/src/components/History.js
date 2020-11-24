@@ -12,7 +12,7 @@ class History extends React.Component {
 
     sletElement = (event, value) => {
         event.preventDefault();
-        this.setState({show:true})
+        this.setState({show:false})
     }
 
     render() { 
@@ -63,16 +63,16 @@ class History extends React.Component {
                 columns={columns}
             />
             </Container>
-            <Modal show={this.state.show} onHide={this.setState({show:false, target:""})}>
+            <Modal show={this.state.show} onHide={()=>this.setState({show:false, target:""})}>
                 <Modal.Header closeButton>
                 <Modal.Title>Du er ved at slette noget!</Modal.Title>
                 </Modal.Header>
-                <Modal.Body></Modal.Body>
+                <Modal.Body>Du er ved at slette en træningsgang. Er du sikker på du har valgt den rigtige?</Modal.Body>
                 <Modal.Footer>
-                <Button variant="secondary" onClick={this.setState({show:false, target:""})}>
+                <Button variant="secondary" onClick={()=>this.setState({show:false, target:""})}>
                     Luk
                 </Button>
-                <Button variant="primary" onClick={()=>this.sletElement()}>
+                <Button variant="primary" onClick={(event)=>this.sletElement(event)}>
                     Slet træning
                 </Button>
                 </Modal.Footer>
