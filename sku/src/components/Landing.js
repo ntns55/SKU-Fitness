@@ -63,7 +63,12 @@ class Login extends react.Component {
               <Col md={6} className="bg-secondary rounded">
                 <Tab.Content>
                   <Tab.Pane eventKey="first">
-                    <Overview/>
+                    <Overview 
+                      data={data} 
+                      styrke={this.props.styrke} 
+                      udholdenhed={this.props.udholdenhed} 
+                      kondition={this.props.kondition}
+                    />
                   </Tab.Pane>
                   <Tab.Pane eventKey="second">
                     <NewSession />
